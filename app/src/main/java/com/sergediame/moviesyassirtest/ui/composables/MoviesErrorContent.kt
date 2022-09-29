@@ -1,4 +1,4 @@
-package com.sergediame.moviesyassirtest.ui.screens
+package com.sergediame.moviesyassirtest.ui.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +23,7 @@ fun MoviesErrorContent() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = stringResource(id = R.string.rockets_error_fetching),
+            text = stringResource(id = R.string.movies_error_fetching),
             color = Color.Red,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.h6

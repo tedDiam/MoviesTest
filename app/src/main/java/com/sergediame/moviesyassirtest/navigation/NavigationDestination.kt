@@ -4,4 +4,5 @@ sealed class NavigationDestination(
     val route: String
 ) {
     object TrendingMovies : NavigationDestination("trendingMoviesDestination")
+    object MovieDetails : NavigationDestination("movieDetailsDestination")
 }

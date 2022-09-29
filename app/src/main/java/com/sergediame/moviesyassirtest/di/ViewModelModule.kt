@@ -1,6 +1,7 @@
 package com.sergediame.moviesyassirtest.di
 
-import com.sergediame.moviesyassirtest.TrendingMoviesUIState
+import com.sergediame.moviesyassirtest.MovieDetailsUIState
+import com.sergediame.moviesyassirtest.MoviesUIState
 import com.sergediame.moviesyassirtest.navigation.MoviesYassirTestNavigationFactory
 import com.sergediame.moviesyassirtest.navigation.NavigationFactory
 import dagger.Binds
@@ -18,7 +19,10 @@ import javax.inject.Singleton
 object ViewModelModule {
 
     @Provides
-    fun provideInitialUiState(): TrendingMoviesUIState = TrendingMoviesUIState()
+    fun provideInitialMoviesUiState(): MoviesUIState = MoviesUIState()
+
+    @Provides
+    fun provideInitialMovieDetailsUiState(): MovieDetailsUIState = MovieDetailsUIState()
 }
 
 

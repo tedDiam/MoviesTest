@@ -1,6 +1,7 @@
 package com.sergediame.moviesyassirtest
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
@@ -13,7 +14,6 @@ import com.sergediame.moviesyassirtest.extensions.collectWithLifecycle
 import com.sergediame.moviesyassirtest.navigation.NavigationFactory
 import com.sergediame.moviesyassirtest.navigation.NavigationHost
 import com.sergediame.moviesyassirtest.navigation.NavigationManager
-import com.sergediame.moviesyassirtest.ui.screens.TrendingMoviesRoute
 import com.sergediame.moviesyassirtest.ui.theme.MoviesYassirTestTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -41,7 +41,6 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         factories = navigationFactories
                     )
-                    TrendingMoviesRoute()
                 }
 
                 navigationManager
@@ -49,15 +48,16 @@ class MainActivity : ComponentActivity() {
                     .collectWithLifecycle(
                         key = navController
                     ) {
-                        navController.navigate(it.destination, it.configuration)
+                        navController.navigate(
+                            it.destination,
+                            it.configuration
+                        )
                     }
 
             }
         }
     }
 }
-
-
 
 
 @Preview(showBackground = true)

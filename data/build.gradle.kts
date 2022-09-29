@@ -32,7 +32,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-
         jvmTarget = "1.8"
     }
 }
@@ -52,11 +51,16 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
+    implementation ("com.google.code.gson:gson:2.8.9")
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+
 
     // Hilt DI
     implementation ("com.google.dagger:hilt-android:2.43.2")
     kapt ("com.google.dagger:hilt-compiler:2.43.2")
     kapt ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
+
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
 
 
     testImplementation ("junit:junit:4.13.2")

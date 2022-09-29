@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.sergediame.moviesyassirtest.ui.composables.LogCompositions
 
 @Composable
 fun NavigationHost(
@@ -12,8 +11,6 @@ fun NavigationHost(
     navController: NavHostController,
     factories: Set<NavigationFactory>
 ) {
-
-    LogCompositions("NavigationHost", "MyComposable function")
 
     NavHost(
         navController = navController,

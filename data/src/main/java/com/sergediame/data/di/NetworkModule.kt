@@ -1,21 +1,30 @@
 package com.sergediame.data.di
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sergediame.data.ApiService
 import com.sergediame.data.BuildConfig
-import com.sergediame.data.RepositoryImpl
+import com.sergediame.data.MovieRepositoryImpl
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Singleton
+    @Provides
+    fun provideMoshi(): Moshi =
+        Moshi.Builder().build()
+
 
     @Singleton
     @Provides
@@ -32,13 +41,23 @@ object NetworkModule {
             .addInterceptor(httpLoggingInterceptor)
             .build()
 
-    @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(BuildConfig.API_BASE_URL)
-        .client(okHttpClient)
-        .build()
+    @Singleton
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+    ): Retrofit {
+        val json = Json {
+            ignoreUnknownKeys = true
+        }
+        val contentType = "application/json".toMediaType()
+
+        return Retrofit
+            .Builder()
+            .addConverterFactory(json.asConverterFactory(contentType))
+            .baseUrl(BuildConfig.API_BASE_URL)
+            .client(okHttpClient)
+            .build()
+    }
 
     @Singleton
     @Provides
@@ -46,6 +65,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesRepository(apiService: ApiService) = RepositoryImpl(apiService)
+    fun providesRepository(apiService: ApiService) = MovieRepositoryImpl(apiService)
 
 }
