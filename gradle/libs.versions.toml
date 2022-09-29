@@ -1,0 +1,19 @@
+[versions]
+kotlin = "1.6.21"
+coroutines = "1.6.4"
+hilt = "2.38.1"
+gradlePlugins-agp = "7.2.0"
+ktLint = "11.0.0"
+
+[libraries]
+coroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutinesAndroid = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+hilt-compiler = {module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+
+#[bundles]
+#coroutines = ["coroutines-android", "coroutines-core"]
+
+[plugins]
+android = { id = "com.android.application", version.ref = "gradlePlugins-agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
