@@ -20,12 +20,15 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.sergediame.moviesyassirtest.*
 import com.sergediame.moviesyassirtest.extensions.collectAsStateWithLifecycle
 import com.sergediame.moviesyassirtest.extensions.collectWithLifecycle
+import com.sergediame.moviesyassirtest.model.MovieUiModel
+import com.sergediame.moviesyassirtest.ui.composables.MoviesErrorContent
+import com.sergediame.moviesyassirtest.ui.composables.MovieItem
 import kotlinx.coroutines.flow.Flow
 
 
 @Composable
 fun TrendingMoviesRoute(
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: TrendingMoviesViewModel = hiltViewModel(),
 ) {
     HandleEvents(viewModel.event)
 
@@ -34,10 +37,10 @@ fun TrendingMoviesRoute(
     TrendingMoviesScreen(
         uiState = uiState,
         onRefreshMovies = {
-            viewModel.acceptIntent(Intent.RefreshTrendingMovies)
+            viewModel.acceptIntent(TrendingMoviesIntent.RefreshMovies)
         },
         onMovieClicked = {
-            viewModel.acceptIntent(Intent.MovieClicked(it))
+            viewModel.acceptIntent(TrendingMoviesIntent.MovieClicked(it))
         }
 
     )
@@ -58,7 +61,7 @@ private fun HandleEvents(events: Flow<Event>) {
 
 @Composable
 internal fun TrendingMoviesScreen(
-    uiState: TrendingMoviesUIState,
+    uiState: MoviesUIState,
     onRefreshMovies: () -> Unit,
     onMovieClicked: (Int) -> Unit
 ) {
@@ -90,11 +93,11 @@ internal fun TrendingMoviesScreen(
 @Composable
 private fun TrendingMoviesAvailableContent(
     scaffoldState: ScaffoldState,
-    uiState: TrendingMoviesUIState,
+    uiState: MoviesUIState,
     onMovieClick: (Int) -> Unit
 ) {
     if (uiState.isError) {
-        val errorMessage = stringResource(R.string.rockets_error_refreshing)
+        val errorMessage = stringResource(R.string.movies_error_refreshing)
 
         LaunchedEffect(scaffoldState.snackbarHostState) {
             scaffoldState.snackbarHostState.showSnackbar(
@@ -103,25 +106,25 @@ private fun TrendingMoviesAvailableContent(
         }
     }
 
-    RocketsListContent(
+    MoviesListContent(
         movieList = uiState.trendingMovies.movies,
         onMovieClick = { onMovieClick(it) }
     )
 }
 
 @Composable
-private fun TrendingMoviesNotAvailableContent(uiState: TrendingMoviesUIState) {
+private fun TrendingMoviesNotAvailableContent(uiState: MoviesUIState) {
     when {
         uiState.isLoading -> MoviesLoadingPlaceholder()
         uiState.isError -> MoviesErrorContent()
     }
 }
 
-const val MOVIE_DIVIDER_TEST_TAG = "rocketDividerTestTag"
+const val MOVIE_DIVIDER_TEST_TAG = "movieDividerTestTag"
 
 
 @Composable
-fun RocketsListContent(
+fun MoviesListContent(
     movieList: List<MovieUiModel>,
     onMovieClick: (Int) -> Unit
 ) {
@@ -135,7 +138,7 @@ fun RocketsListContent(
             items = movieList,
             key = { _, movie -> movie.id }
         ) { index, item ->
-            RocketItem(
+            MovieItem(
                 movie = item,
                 onMovieClick = { onMovieClick(item.id) }
             )

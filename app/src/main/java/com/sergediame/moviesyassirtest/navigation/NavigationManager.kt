@@ -1,6 +1,6 @@
 package com.sergediame.moviesyassirtest.navigation
 
-import com.sergediame.moviesyassirtest.navigation.NavigationCommand
+import androidx.navigation.NamedNavArgument
 import kotlinx.coroutines.flow.Flow
 
 interface NavigationManager {

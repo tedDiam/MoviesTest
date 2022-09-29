@@ -1,5 +1,6 @@
-package com.sergediame.moviesyassirtest.ui.screens
+package com.sergediame.moviesyassirtest.ui.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,14 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
-import com.sergediame.moviesyassirtest.MovieUiModel
+import com.sergediame.moviesyassirtest.model.MovieUiModel
 import com.sergediame.moviesyassirtest.R
 import com.sergediame.moviesyassirtest.ui.theme.Typography
 
 @Composable
-fun RocketItem(
+fun MovieItem(
     movie: MovieUiModel,
     onMovieClick: () -> Unit
 ) {
@@ -26,59 +28,44 @@ fun RocketItem(
             .padding(
                 vertical = dimensionResource(id = R.dimen.dimen_medium)
             )
-            .clickable {onMovieClick() },
+            .clickable { onMovieClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
+        AsyncImage(
+            model = movie.poster_path,
+            contentDescription = stringResource(id = R.string.movie_image_content_description),
+            modifier = Modifier
+                .weight(1f)
+        )
         Column(
             modifier = Modifier
-                .weight(1f),
+                .weight(1f)
+                .padding(start = dimensionResource(id = R.dimen.dimen_small)),
             verticalArrangement = Arrangement.spacedBy(
                 dimensionResource(id = R.dimen.dimen_small)
             )
         ) {
             Text(
                 text = movie.title,
-                style = Typography.subtitle1
+                style = Typography.subtitle1,
             )
 
-            Text(
-                text = stringResource(
-                    id = R.string.rocket_cost_per_launch,
-                    movie.vote_average
-                ),
-                style = Typography.body1
-            )
+            Row (verticalAlignment = Alignment.CenterVertically){
+                Image(
+                    painter = painterResource(R.drawable.ic_baseline_star_rate_24),
+                    contentDescription = null,
+                )
+                Text(
+                    text = movie.vote_average.toString(),
+                    style = Typography.body1
+                )
+            }
 
             Text(
-                text = stringResource(
-                    id = R.string.rocket_first_flight,
-                    movie.original_title
-                ),
-                style = Typography.body1
-            )
-
-            Text(
-                text = stringResource(
-                    id = R.string.rocket_height,
-                    movie.popularity
-                ),
-                style = Typography.body1
-            )
-
-            Text(
-                text = stringResource(
-                    id = R.string.rocket_weight,
-                    movie.vote_average
-                ),
-                style = Typography.body1
+                text = movie.release_date,
+                style = Typography.body1,
             )
         }
 
-        AsyncImage(
-            model = movie.poster_path,
-            contentDescription = stringResource(id = R.string.rocket_image_content_description),
-            modifier = Modifier
-                .weight(1f)
-        )
     }
 }

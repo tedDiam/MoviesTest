@@ -1,6 +1,7 @@
 package com.sergediame.moviesyassirtest
 
 import android.os.Parcelable
+import com.sergediame.moviesyassirtest.model.TrendingMoviesUiModel
 import kotlinx.parcelize.Parcelize
 import javax.annotation.concurrent.Immutable
 

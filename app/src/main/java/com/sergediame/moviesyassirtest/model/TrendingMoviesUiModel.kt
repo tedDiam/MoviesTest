@@ -1,4 +1,4 @@
-package com.sergediame.moviesyassirtest
+package com.sergediame.moviesyassirtest.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
